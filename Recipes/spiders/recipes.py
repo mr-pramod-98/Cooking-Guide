@@ -6,6 +6,7 @@ from ..items import RecipesItem
 class RecipesSpider(scrapy.Spider):
     name = 'recipes'
     start_urls = ['https://www.allrecipes.com/recipes/233/world-cuisine/asian/indian/?page=1']
+    page_number = 2
 
     def parse(self, response):
 
@@ -18,3 +19,9 @@ class RecipesSpider(scrapy.Spider):
             item['title'] = title
             item['url'] = url
             yield item
+
+        next_page = 'https://www.allrecipes.com/recipes/233/world-cuisine/asian/indian/?page=' + str(RecipesSpider.page_number)
+
+        if RecipesSpider.page_number <= 43:
+            RecipesSpider.page_number += 1
+            yield response.follow(next_page, callback=self.parse)
