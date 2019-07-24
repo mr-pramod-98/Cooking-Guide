@@ -6,6 +6,7 @@ from ..items import RecipesItem
 
 
 class RecipesSpider(scrapy.Spider):
+    
     name = 'recipes'
     start_urls = ['https://www.allrecipes.com/recipes/233/world-cuisine/asian/indian/?page=1']
 
@@ -34,6 +35,14 @@ class RecipesSpider(scrapy.Spider):
         for recipe in recipes_list:
             title = recipe.css('span.fixed-recipe-card__title-link::text').extract()
             url = recipe.css('.fixed-recipe-card__h3 a').xpath("@href").extract()
+
+            # OBTAINING THE URL OF NEXT PAGE
+            next_page = 'https://www.allrecipes.com/recipes/233/world-cuisine/asian/indian/?page=' + str(
+                RecipesSpider.page_number)
+
+            if RecipesSpider.page_number <= 43:
+                RecipesSpider.page_number += 1
+                yield response.follow(next_page, callback=self.parse)
 
             # ADDING TO "reference"
             RecipesSpider.reference[title[0]] = url[0]
