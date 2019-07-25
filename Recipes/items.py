@@ -10,6 +10,5 @@ import scrapy
 
 class RecipesItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Filed()
     title = scrapy.Field()
-    url = scrapy.Field()
+    ingredients = scrapy.Field()
