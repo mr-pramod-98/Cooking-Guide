@@ -122,10 +122,14 @@ class RecipesSpider(scrapy.Spider):
         # SCRAP THE NAME TO THE ITEM
         title = responce.css('#recipe-main-content::text').get()
 
-        # SCRAP THE RECIPE OF THE ITEM
+        # SCRAP THE INGREDIENTS OF THE ITEM
         ingredients = responce.css('.added::text').extract()
 
+        # SCRAP THE PROCEDURE TO COOK THE ITEM
+        procedures = responce.css('.recipe-directions__list--item::text').extract()
+
         # ADDING SCRAPED ELEMENTS TO ITEM'S LIST
-        RecipesSpider.item['ingredients'] = ingredients
         RecipesSpider.item['title'] = title
+        RecipesSpider.item['ingredients'] = ingredients
+        RecipesSpider.item['procedures'] = procedures
         yield RecipesSpider.item
