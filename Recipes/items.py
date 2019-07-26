@@ -12,3 +12,4 @@ class RecipesItem(scrapy.Item):
     # define the fields for your item here like:
     title = scrapy.Field()
     ingredients = scrapy.Field()
+    procedures = scrapy.Field()
