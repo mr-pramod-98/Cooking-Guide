@@ -22,7 +22,8 @@ class RecipesPipeline(object):
         self.mycursor.execute("""DROP TABLE IF EXISTS Recipes""")
         self.mycursor.execute("""create table Recipes(
                               title varchar(100),
-                              ingredients text(500)
+                              ingredients text(500),
+                              procedures text
                              )""")
 
     def store_to_database(self, item):
@@ -32,8 +33,13 @@ class RecipesPipeline(object):
         for ingredient in item['ingredients']:
             ingredients = ingredients + ingredient + "\n"
 
-        query = "insert into Recipes(title, ingredients) values(%s, %s)"
-        values = (item['title'], ingredients)
+        # CONVERTING THE LIST COOKING PROCEDURE INTO STRING
+        procedures = ''
+        for procedure in item['procedures']:
+            procedures = procedures + procedure
+
+        query = "insert into Recipes(title, ingredients, procedures) values(%s, %s, %s)"
+        values = (item['title'], ingredients, procedures)
 
         self.mycursor.execute(query, values)
         self.mydatabase.commit()
