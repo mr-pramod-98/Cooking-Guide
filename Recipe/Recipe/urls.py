@@ -18,6 +18,8 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('', include('account.urls')),
+    # MAKE "cook" APP AS THE DEFAULT APP
+    path('', include('cook.urls')),
+    path('account/', include('account.urls')),
     path('admin/', admin.site.urls),
 ]
