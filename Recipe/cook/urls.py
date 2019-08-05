@@ -3,5 +3,6 @@ from . import views
 
 
 urlpatterns = [
+    # MAKE "index" PAGE OF THE "cook" APP AS THE MAIN PAGE
     path('', views.index, name="index"),
 ]
