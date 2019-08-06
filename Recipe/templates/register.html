@@ -8,6 +8,7 @@
 <body bgcolor="red">
 
     <form action="register" method="post">
+        {% csrf_token%}
 
         <input type="text" name="first_name" placeholder="First Name"><br>
         <input type="text" name="last_name" placeholder="Last Name"><br>
@@ -18,6 +19,13 @@
         <input type="submit">
 
     </form>
+
+    <!-- PRINTING ERROR MESSAGE -->
+    {% for message in messages %}
+
+    <h3> {{message}} </h3>
+
+    {% endfor %}
 
 </body>
 </html>
