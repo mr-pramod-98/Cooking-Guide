@@ -1,26 +1,47 @@
+{% load static%}
 <!doctype>
 <html>
 
 <head>
-    <title>Pramod</title>
+    <title>Cooking Guide</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'cook/index.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'account/register.css'%}">
 </head>
 
-<body bgcolor="red">
+<body>
+    <header>
 
-    <div align="right">
-        <!-- REDIRECTING FROM "login" PAGE OF "cook" APP TO "register" PAGE OF "cook" APP -->
-        <a href="register">
-            <button> Register</button>
-        </a>
-    </div>
+            <div  id="header" align="center">
 
-    <form action="login" method="post">
+                <h3>Cooking Guide</h3>
+                <!-- REDIRECTING FROM "login" PAGE OF "cook" APP TO "register" PAGE OF "cook" APP -->
+                <a class="button" href="register"><button> Register</button></a>
 
-        <input type="text" name="username" placeholder="Username"><br>
-        <input type="password" name="password" placeholder="Password"><br>
-        <input type="submit">
+            </div>
+
+    </header>
+
+    <section>
+
+        <form id="form" action="login" method="post">
+            {% csrf_token%}
+
+            <li>Username</li>
+            <input type="text" name="username" placeholder="Username"><br><br>
+            <li>Password</li>
+            <input type="password" name="password" placeholder="Password"><br><br>
+            <input type="submit" value="Submit">
 
     </form>
+
+        <!-- PRINTING ERROR MESSAGE -->
+        {% for message in messages %}
+
+        <h3> {{message}} </h3>
+
+        {% endfor %}
+
+    </section>
 
 </body>
 </html>
