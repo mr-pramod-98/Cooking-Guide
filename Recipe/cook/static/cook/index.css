@@ -4,7 +4,6 @@ body{
 }
 
 #header{
-    position : relative;
     background : black;
     opacity : 0.85;
     height : 125px;
@@ -12,25 +11,25 @@ body{
 
 #header h3{
     position : relative;
-    left : 150px;
-    float : left;
-
     font : bold 50px Tahoma;
     color : white;
 }
 
 .button{
     position : relative;
-    top : 50px;
-    right : 50px;
+    top : -30px;
+    left : 0%;
 }
 
 section img{
     position : relative;
-    left : -50px;
-    top : 20px;
+    left : 25%;
     max-width : 50%;
-    max-height : 50%;
+    max-height : 100%;
 
     opacity: 0.75;
+}
+
+section{
+    align : right;
 }
