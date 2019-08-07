@@ -1,22 +1,29 @@
+{% load static%}
 <!doctype>
 <html>
     <head>
         <title>Cooking Guide</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'cook/index.css'%}">
     </head>
-    
+
     <body>
 
-        <header ><h3>Cooking Guide</h3></header>
+        <header>
+
+            <div  id="header" align="center">
+
+                <h3>Cooking Guide</h3>
+
+                <!-- REDIRECTING TO "account" APP's "login" PAGE FROM "cook" APP -->
+                <a class="button" href="account/login"><button>Login</button></a>
+                <!-- REDIRECTING TO "account" APP's "register" PAGE FROM "cook" APP -->
+                <a class="button" href="account/register"><button>Register</button></a>
+            </div>
+
+        </header>
     
         <section>
-    
-            <div align="center">
-                <!-- REDIRECTING TO "account" APP's "login" PAGE FROM "cook" APP -->
-                <a href="account/login"><button>Login</button></a>
-                <!-- REDIRECTING TO "account" APP's "register" PAGE FROM "cook" APP -->
-                <a href="account/register"><button>Register</button></a>
-            </div>
-    
+            <img src="{% static 'cook/images/index.jpg'%}">
         </section>
 
     </body>
