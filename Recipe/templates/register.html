@@ -1,31 +1,56 @@
+{% load static%}
 <!doctype>
 <html>
 
 <head>
-    <title>Pramod</title>
+    <title>Cooking Guide</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'cook/index.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'account/register.css'%}">
 </head>
 
-<body bgcolor="red">
+<body>
 
-    <form action="register" method="post">
-        {% csrf_token%}
+    <header>
 
-        <input type="text" name="first_name" placeholder="First Name"><br>
-        <input type="text" name="last_name" placeholder="Last Name"><br>
-        <input type="text" name="username" placeholder="Username"><br>
-        <input type="email" name="email" placeholder="Email"><br>
-        <input type="password" name="password" placeholder="Password"><br>
-        <input type="password" name="password_conf" placeholder="Confirm Password"><br>
-        <input type="submit">
+            <div  id="header" align="center">
 
-    </form>
+                <h3>Cooking Guide</h3>
+                <!-- REDIRECTING TO "account" APP's "login" PAGE FROM "account" APP -->
+                <a class="button" href="login"><button>Login</button></a>
 
-    <!-- PRINTING ERROR MESSAGE -->
-    {% for message in messages %}
+            </div>
 
-    <h3> {{message}} </h3>
+    </header>
 
-    {% endfor %}
+    <section>
+
+        <form id="form" action="register" method="post">
+            {% csrf_token%}
+
+            <li>First Name</li>
+            <input type="text" name="first_name" placeholder="First Name"><br><br>
+            <li>Last Name</li>
+            <input type="text" name="last_name" placeholder="Last Name"><br><br>
+            <li>Username</li>
+            <input type="text" name="username" placeholder="Username"><br><br>
+            <li>Email id</li>
+            <input type="email" name="email" placeholder="Email"><br><br>
+            <li>Password</li>
+            <input type="password" name="password" placeholder="Password"><br><br>
+            <li>Confirm Password</li>
+            <input type="password" name="password_conf" placeholder="Confirm Password"><br><br>
+            <input type="submit" value="submit">
+
+        </form>
+
+        <!-- PRINTING ERROR MESSAGE -->
+        {% for message in messages %}
+
+        <h3> {{message}} </h3>
+
+        {% endfor %}
+
+    </section>
 
 </body>
 </html>
