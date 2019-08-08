@@ -5,6 +5,7 @@ from django.contrib.auth.models import User, auth
 
 # Create your views here.
 def register(request):
+
     # IF THE REQUEST METHOD IS POST EXECUTE if BLOCK
     if request.method == 'POST':
 
@@ -19,7 +20,7 @@ def register(request):
         if password1 == password2:
 
             if User.objects.filter(username=username).exist():
-                
+
                 # IF THE USERNAME IS TAKEN THEN REDIRECTING THE USER BACK TO THE "register" PAGE
                 messages.info(request, "username taken")
                 return redirect('register')
@@ -27,10 +28,10 @@ def register(request):
             else:
                 # CREATING A USER RECORD IN THE "User" TABLE
                 user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password2)
-                
+
                 # SAVING THE CHANGES
                 user.save()
-                
+
                 # REDIRECTING TO "login" PAGE AFTER SUCCESSFUL REGISTRATION
                 return redirect('login')
         else:
@@ -45,7 +46,32 @@ def register(request):
 
 
 def login(request):
-    return render(request, 'login.html')
+
+    # IF THE REQUEST METHOD IS POST EXECUTE if BLOCK
+    if request.method == "POST":
+
+        # FETCHING "username" AND "password" FROM THE LOGIN PAGE
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # AUTHENTICATING THE USER
+        # "user" EQUALS "None" IF THE "username" DOES NOT MATCH WITH IT'S THE CORRESPONDING "password"
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None:
+            auth.login(request, user)
+
+            # REDIRECTING TO "cook" PAGE AFTER SUCCESSFUL LOGIN
+            return redirect('cook')
+        else:
+            messages.info(request, "invalid username or password")
+
+            # REDIRECTING BACK TO "login" IF THE "username" DOES NOT MATCH WITH IT'S THE CORRESPONDING "password"
+            return redirect('login')
+
+    # IF THE REQUEST METHOD IS GET EXECUTE else BLOCK
+    else:
+        return render(request, 'login.html')
 
 
 def logout(request):
