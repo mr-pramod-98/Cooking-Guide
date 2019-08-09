@@ -1,0 +1,29 @@
+#form{
+    background : black;
+    opacity : 0.5;
+    padding : 10px;
+    margin-top : 5px;
+    border-radius : 5px;
+}
+
+.content{
+    border : 1px solid black;
+    border-radius : 5px;
+    margin : 0px 5px 5px 5px;
+    background : black;
+    color : white;
+    opacity : 0.35;
+}
+
+.title{
+    padding : 2px;
+    font : bold 20px Tahoma;
+}
+
+.ingredients{
+    padding : 2px 5px 2px 5px;
+}
+
+.directions{
+    padding : 2px 5px 10px 5px;
+}
