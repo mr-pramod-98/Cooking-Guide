@@ -61,8 +61,9 @@ def login(request):
         if user is not None:
             auth.login(request, user)
 
-            # REDIRECTING TO "cook" PAGE AFTER SUCCESSFUL LOGIN
-            return redirect('cook')
+            # REDIRECTING TO "cook_guide/<username>" PAGE AFTER SUCCESSFUL LOGIN
+            # EXAMPLE: /cook_guide/pramod
+            return redirect('/cook_guide/' + username)
         else:
             messages.info(request, "invalid username or password")
 
