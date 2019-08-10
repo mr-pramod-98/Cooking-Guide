@@ -1,0 +1,51 @@
+{% load static%}
+<!doctype>
+<html>
+    <head>
+        <title>Cooking Guide</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'cook/index.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'cook/cook.css'%}">
+    </head>
+
+    <body>
+
+        <header>
+
+            <div  id="header" align="center">
+
+                <h3>Cooking Guide</h3>
+
+                <!-- REDIRECTING TO "cook" APP's "index" PAGE FROM "cook" APP's "cook" PAGE -->
+                <a class="button" href="cook/index"><button>Logout</button></a>
+            </div>
+
+        </header>
+
+        <section>
+            <!-- ===================================================== action not specified =======================-->
+            <form id="form" action="" method="post">
+                {% csrf_token%}
+
+                <input type="text" name="item name" placeholder="Surprise Me!">
+                <input type="submit" value="Crawl">
+
+            </form>
+
+            {% for recipes in cooking_recipes %}
+            <div class="content">
+
+                <div class="title">{{recipes.title}}</div>
+                <!-- ADDING HORIZONTAL LINE -->
+                <hr>
+                <div class="ingredients">{{recipes.ingredients}}</div>
+                <!-- ADDING HORIZONTAL LINE -->
+                <hr>
+                <div class="directions">{{recipes.directions}}</div>
+
+            </div>
+            {% endfor %}
+
+        </section>
+
+    </body>
+</html>
