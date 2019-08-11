@@ -100,4 +100,9 @@ def login(request):
 
 
 def logout(request):
-    pass
+
+    # LOGGING-OUT THE USER
+    auth.logout(request)
+    
+    # REDIRECTING THE USER TO THE HOME PAGE
+    return redirect('/')
