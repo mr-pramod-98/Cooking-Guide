@@ -1,6 +1,26 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
+import mysql.connector
+
+
+class CreateAccount:
+
+    def __init__(self):
+        self.create_connection()
+
+    def create_connection(self):
+        self.mydatabase = mysql.connector.connect(host='localhost', user='root', passwd='password', database='recipe_test')
+        self.mycursor = self.mydatabase.cursor()
+
+    def create_table_by_username(self, table_name):
+        self.mycursor.execute(''' 
+                                    CREATE TABLE ''' + table_name + '''(
+                                    ID int,
+                                    title varchar(100),
+                                    ingredients text,
+                                    directions text);
+                                ''')
 
 
 # Create your views here.
@@ -19,13 +39,17 @@ def register(request):
 
         if password1 == password2:
 
-            if User.objects.filter(username=username).exist():
+            if User.objects.filter(username=username).exists():
 
                 # IF THE USERNAME IS TAKEN THEN REDIRECTING THE USER BACK TO THE "register" PAGE
                 messages.info(request, "username taken")
                 return redirect('register')
 
             else:
+                # CREATE AN ACCOUNT BY THE NAME OF USER
+                new_account = CreateAccount()
+                new_account.create_table_by_username(username)
+
                 # CREATING A USER RECORD IN THE "User" TABLE
                 user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password2)
 
