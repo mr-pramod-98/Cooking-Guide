@@ -14,8 +14,9 @@
             <div  id="header" align="center">
 
                 <h3>Cooking Guide</h3>
-                <!-- REDIRECTING FROM "login" PAGE OF "cook" APP TO "register" PAGE OF "cook" APP -->
-                <a class="button" href="register"><button> Register</button></a>
+                <!-- REDIRECTING TO "account" APP's "register" PAGE FROM "account" APP's "login" PAGE
+                     BY CALLING THE "register" METHOD PRESENT IN URL "/account/register"-->
+                <a class="button" href="/account/register"><button> Register</button></a>
 
             </div>
 
@@ -32,7 +33,7 @@
             <input type="password" name="password" placeholder="Password"><br><br>
             <input type="submit" value="Submit">
 
-    </form>
+        </form>
 
         <!-- PRINTING ERROR MESSAGE -->
         {% for message in messages %}
