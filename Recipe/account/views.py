@@ -13,6 +13,7 @@ class CreateAccount:
         self.mydatabase = mysql.connector.connect(host='localhost', user='root', passwd='password', database='recipe_test')
         self.mycursor = self.mydatabase.cursor()
 
+    # "create_table_by_username" METHOD CREATES A TABLE BY THE "username" OF THE USER IN THE SPECIFIED DATABASE
     def create_table_by_username(self, table_name):
         self.mycursor.execute(''' 
                                     CREATE TABLE ''' + table_name + '''(
@@ -24,6 +25,8 @@ class CreateAccount:
 
 
 # Create your views here.
+
+# "register" METHOD IS CALLED WHET THE USER REQUEST FOR "register" PAGE
 def register(request):
 
     # IF THE REQUEST METHOD IS POST EXECUTE if BLOCK
@@ -46,7 +49,7 @@ def register(request):
                 return redirect('register')
 
             else:
-                # CREATE AN ACCOUNT BY THE NAME OF USER
+                # CREATE AN ACCOUNT BY THE "username" OF USER
                 new_account = CreateAccount()
                 new_account.create_table_by_username(username)
 
@@ -69,6 +72,7 @@ def register(request):
         return render(request, 'register.html')
 
 
+# "login" METHOD IS CALLED WHET THE USER REQUEST FOR "login" PAGE
 def login(request):
 
     # IF THE REQUEST METHOD IS POST EXECUTE if BLOCK
@@ -99,10 +103,11 @@ def login(request):
         return render(request, 'login.html')
 
 
+# "logout" METHOD IS CALLED WHET THE USER LOGOUT'S OF HIS ACCOUNT
 def logout(request):
 
     # LOGGING-OUT THE USER
     auth.logout(request)
-    
+
     # REDIRECTING THE USER TO THE HOME PAGE
     return redirect('/')
