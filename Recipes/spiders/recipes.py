@@ -42,7 +42,7 @@ class RecipesSpider(scrapy.Spider):
 
     # GETTING USER INPUT
     user = UserInput()
-    item_name = user.read()
+    item_name = UserInput.get_item(user)
 
     # "generate_next_pageindex" METHOD GENERATES 'URL' AND 'NEXT PAGE INDEX'
     def generate_next_pageindex(self, url):
