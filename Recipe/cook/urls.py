@@ -5,6 +5,5 @@ from . import views
 urlpatterns = [
     # MAKE "index" PAGE OF THE "cook" APP AS THE MAIN PAGE
     path('', views.index, name="index"),
-    path('cook', views.cook, name="cook"),
     path('cook_guide/<str:username>/', views.cook_guide, name="cook_guide"),
 ]
