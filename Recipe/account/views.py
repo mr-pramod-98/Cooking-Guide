@@ -18,9 +18,9 @@ class CreateAccount:
         self.mycursor.execute(''' 
                                     CREATE TABLE ''' + table_name + '''(
                                     ID int,
-                                    title varchar(100),
-                                    ingredients text,
-                                    directions text);
+                                    title varchar(200),
+                                    ingredients longtext,
+                                    directions longtext);
                                 ''')
 
 
