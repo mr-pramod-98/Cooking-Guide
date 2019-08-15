@@ -23,21 +23,26 @@ class RecipesPipeline(object):
         table = UserInput()
         table_name = UserInput.get_tablename(table)
 
-        # CONVERTING THE LIST OF INGREDIENTS INTO STRING
-        ingredients = ''
-        for ingredient in item['ingredients']:
-            ingredients = ingredients + ingredient + "\n"
+        try:
+            # CONVERTING THE LIST OF INGREDIENTS INTO STRING
+            ingredients = ''
+            for ingredient in item['ingredients']:
+                ingredients = ingredients + ingredient + ", "
 
-        # CONVERTING THE LIST COOKING PROCEDURE INTO STRING
-        procedures = ''
-        for procedure in item['procedures']:
-            procedures = procedures + procedure
+            # CONVERTING THE LIST COOKING PROCEDURE INTO STRING
+            procedures = ''
+            for procedure in item['procedures']:
+                procedures = procedures + procedure
 
-        query = "insert into " + table_name + "(title, ingredients, directions) values(%s, %s, %s)"
-        values = (item['title'], ingredients, procedures)
+            query = "INSERT INTO " + table_name + "(TITLE, INGREDIENTS, DIRECTIONS) VALUES(%s, %s, %s)"
+            values = (item['title'], ingredients, procedures)
 
-        self.mycursor.execute(query, values)
-        self.mydatabase.commit()
+            self.mycursor.execute(query, values)
+            self.mydatabase.commit()
+
+        # EXCEPTS THE "IntegrityError" (i.e, INSERTING A TUPLE WHICH ALREADY EXIST)
+        except mysql.connector.errors.IntegrityError:
+            pass
 
         print(self.mycursor.rowcount, "record inserted")
 
