@@ -27,12 +27,16 @@ class RecipesPipeline(object):
             # CONVERTING THE LIST OF INGREDIENTS INTO STRING
             ingredients = ''
             for ingredient in item['ingredients']:
-                ingredients = ingredients + ingredient + ", "
+
+                # IGNORING THE STRING "Add all ingredients to list"
+                if ingredient == "Add all ingredients to list":
+                    continue
+                ingredients = ingredients + ingredient + "\n"
 
             # CONVERTING THE LIST COOKING PROCEDURE INTO STRING
             procedures = ''
             for procedure in item['procedures']:
-                procedures = procedures + procedure
+                procedures = procedures + procedure + "\n"
 
             query = "INSERT INTO " + table_name + "(TITLE, INGREDIENTS, DIRECTIONS) VALUES(%s, %s, %s)"
             values = (item['title'], ingredients, procedures)
