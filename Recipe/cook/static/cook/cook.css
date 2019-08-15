@@ -1,32 +1,49 @@
 #form{
-    background : black;
-    opacity : 0.5;
+    background : #808080;
     padding : 10px;
 }
 
 .content{
+    /* top-left corner, top-right corner, bottom-right corner, bottom-left corner */
+    border-radius : 10px 10px 10px 10px;
     margin : 0px 70px 30px 70px;
-    background : black;
-    box-shadow : 3px 3px 5px black;
+    box-shadow : 3px 3px 10px black;
 }
 
 .title{
     padding : 10px;
+    border-radius : 10px 10px 0px 0px;
     font : bold 20px Tahoma;
+    background : black;
     color : white;
 }
 
 .ingredients{
+    /* top, right, bottom, left */
     padding : 10px 20px 10px 20px;
-    background : white;
-    opacity : 0.75;
+    background-color : #EA5E3D;
+    color : white;
+    font-size : 21.6px;
+    font-size : 1.2rem;
+    max-height : 300px;
+    overflow-x: auto;
+    scrollbar-color : white #EA5E3D;
+    scrollbar-width : thin;
 }
 
 .directions{
-    /*        top right bottom left         */
+    /* top, right, bottom, left */
     padding : 10px 20px 10px 20px;
+    /* top-left corner, top-right corner, bottom-right corner, bottom-left corner */
+    border-radius : 0px 0px 15px 15px;
     background : white;
-    opacity : 0.75;
+    color : #EA5E3D;
+    font-size : 21.6px;
+    font-size : 1.2rem;
+    max-height : 300px;
+    overflow-x: auto;
+    scrollbar-color: #EA5E3D white;
+    scrollbar-width : thin;
 }
 
 hr{
