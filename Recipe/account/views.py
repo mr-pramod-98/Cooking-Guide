@@ -17,10 +17,9 @@ class CreateAccount:
     def create_table_by_username(self, table_name):
         self.mycursor.execute(''' 
                                     CREATE TABLE ''' + table_name + '''(
-                                    ID int,
-                                    title varchar(200),
-                                    ingredients longtext,
-                                    directions longtext);
+                                    TITLE VARCHAR(200) PRIMARY KEY,
+                                    INGREDIENTS LONGTEXT,
+                                    DIRECTIONS LONGTEXT);
                                 ''')
 
 
