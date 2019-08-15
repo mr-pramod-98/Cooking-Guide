@@ -23,8 +23,8 @@ class CookingGuide:
         query = "SELECT * FROM " + table_name
         self.mycursor.execute(query)
 
-        # "id", "title", "ingredients" AND "directions" ARE THE COLUMN-NAME'S IN THE TABLE
-        for (id, title, ingredients, directions) in self.mycursor:
+        # "title", "ingredients" AND "directions" ARE THE COLUMN-NAME'S IN THE TABLE
+        for (title, ingredients, directions) in self.mycursor:
             recipes = {
                         "title": title,
                         "ingredients": ingredients,
@@ -39,13 +39,13 @@ class CookingGuide:
 class RunCrawler:
 
     def crawler(self):
-        
+
         # MOVING TO THE DIRECTORY WHERE THE "spiders" ARE PRESENT
         os.chdir('cook/ScrapyProject/Recipes')
 
         # INITIATING THE CRAWLER
         os.system('scrapy crawl recipes')
-        
+
         # MOVING BACK TO THE PREVIOUS WORKING DIRECTORY
         os.chdir('../../..')
 
@@ -59,12 +59,12 @@ def index(request):
 
 # "cook_guide" METHOD IS CALLED WHET THE USER LOGIN'S SUCCESSFULLY AND EVERY-TIME USER CLICK'S CRAWL BUTTON
 def cook_guide(request, username):
-    
+
     # IF THE REQUEST METHOD IS POST EXECUTE if BLOCK
     if request.method == "POST":
-        
+
         item = request.POST['item name']
-        
+
         # WRITE THE "item" AND "username" ON TO THE "connector" FILE USING THE "set_itenm_and_tablename" METHOD
         connector = UserInput()
         UserInput.set_item_and_tablename(connector, item, username)
@@ -72,13 +72,13 @@ def cook_guide(request, username):
         # RUN THE WEB-CRAWLER BY CALLING THE "crawler" METHOD
         crawl = RunCrawler()
         crawl.crawler()
-        
+
         # REDIRECTING BACK TO THE SAME PAGE AFTER CRAWLING
         return redirect('/cook_guide/' + username)
 
     # IF THE REQUEST METHOD IS GET EXECUTE else BLOCK
     else:
-        
+
         # "username" IS THE NAME OF THE TABLE
         data = CookingGuide()
         cooking_recipes = data.fetch_data(username)
