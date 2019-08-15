@@ -38,10 +38,10 @@
                 <div class="title">{{recipes.title}}</div>
                 <!-- ADDING HORIZONTAL LINE -->
                 <hr>
-                <div class="ingredients">{{recipes.ingredients}}</div>
+                <div class="ingredients">{{recipes.ingredients|linebreaksbr}}</div>
                 <!-- ADDING HORIZONTAL LINE -->
                 <hr>
-                <div class="directions">{{recipes.directions}}</div>
+                <div class="directions">{{recipes.directions|linebreaksbr}}</div>
 
             </div>
             {% endfor %}
