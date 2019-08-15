@@ -23,12 +23,12 @@
         </header>
 
         <section>
-            
+
             <form id="form" action="/cook_guide/{{user.username}}/" method="post">
                 {% csrf_token%}
 
                 <input type="text" name="item name" placeholder="Surprise Me!">
-                <input type="submit" value="submit">
+                <input type="submit" value="Crawl">
 
             </form>
 
