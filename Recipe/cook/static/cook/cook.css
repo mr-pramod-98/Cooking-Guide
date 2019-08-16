@@ -6,7 +6,7 @@
 .content{
     /* top-left corner, top-right corner, bottom-right corner, bottom-left corner */
     border-radius : 10px 10px 10px 10px;
-    margin : 0px 70px 30px 70px;
+    margin : 50px 70px 0px 70px;
     box-shadow : 3px 3px 10px black;
 }
 
@@ -50,4 +50,21 @@ hr{
     margin : 0px;
     padding : opx;
     color : white;
+}
+
+#delete button{
+    border : 1px solid #808080;
+    background-color : #808080;
+    color : white;
+    border-radius : 15px;
+    height : 25px;
+}
+
+#delete button:hover{
+    background-color : white;
+    color : red;
+}
+
+#delete{
+    float : right;
 }
