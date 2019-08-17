@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 import mysql.connector
+import re
 
 
 class CreateAccount:
@@ -39,6 +40,38 @@ def register(request):
         password1 = request.POST['password']
         password2 = request.POST['password_conf']
 
+        # FORM VALIDATION --> START
+
+        # CHECKING WEATHER ALL THE FIELDS ARE FILLED
+        if len(first_name) != 0 and len(last_name) != 0 and len(username) != 0 and len(password1) != 0 and len(email) != 0:
+
+            # CHECKING WEATHER "username" STARTS WITH ALPHABETS
+            if re.match(r'^[a-z,A-Z]+', username) is not None:
+
+                # CHECKING FOR THE FORMAT CORRECT USERNAME-FORMAT
+                username_format = re.match(r'[a-z,A-Z]+[a-z,A-Z,0-9]*[_]*[a-z,A-Z,0-9]*', username)
+                if username_format is not None and username_format.span()[1] == len(username):
+                    # ALL TEST-CASES ARE PASSED
+                    pass
+                
+                else:
+
+                    # IF THE USERNAME CONTAINS ANY SPECIAL CHARACTER OTHER THEN UNDERSCOPE
+                    # THEN REDIRECTING THE USER BACK TO THE "register" PAGE
+                    messages.info(request, "no special character other then underscore(_) is allowed")
+                    return redirect('register')
+            else:
+
+                # IF THE USERNAME DOES NOT START WITH A ALPHABET THEN REDIRECTING THE USER BACK TO THE "register" PAGE
+                messages.info(request, "username should start with alphabet")
+                return redirect('register')
+        else:
+
+            # IF ALL THE DETAILS ARE NOT FILLED THEN REDIRECTING THE USER BACK TO THE "register" PAGE
+            messages.info(request, "fill all details")
+            return redirect('register')
+
+        # CHECKING WEATHER BOTH "Password" AND "Confirm Password" FIELDS CONTAIN SAME STRING
         if password1 == password2:
 
             if User.objects.filter(username=username).exists():
@@ -65,6 +98,8 @@ def register(request):
             # IF THE PASSWORD DOES NOT MATCH THEN REDIRECTING THE USER BACK TO THE "register" PAGE
             messages.info(request, "password not matching")
             return redirect('register')
+
+        # FORM VALIDATION --> END
 
     # IF THE REQUEST METHOD IS GET EXECUTE else BLOCK
     else:
