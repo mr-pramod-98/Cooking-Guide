@@ -1,6 +1,16 @@
+#messages{
+    height : 40px;
+}
+
+#messages h3{
+    text-align : center;
+    font : 20px bold Tahoma;
+    color : red;
+}
+
 #form{
     position : relative;
-    top : 100px;
+    top : 60px;
     left : 40%;
     width : 250px;
     padding : 10px;
@@ -14,5 +24,5 @@ li{
 }
 
 footer{
-    margin-top : 200px;
+    margin-top : 170px;
 }
