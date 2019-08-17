@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import Http404
 import mysql.connector
 from .ScrapyProject.Recipes.Recipes.spiders.user_input import UserInput
 import os
@@ -19,18 +20,22 @@ class CookingGuide:
         # "cooking_recipes" CONTAINS LIST OF DICTIONARIES
         cooking_recipes = []
 
-        # "table_name" IS NAME OF THE TABLE FROM WHICH DATA HAS TO BE FETCHED
-        query = "SELECT * FROM " + table_name
-        self.mycursor.execute(query)
+        try:
+            # "table_name" IS NAME OF THE TABLE FROM WHICH DATA HAS TO BE FETCHED
+            query = "SELECT * FROM " + table_name
+            self.mycursor.execute(query)
 
-        # "title", "ingredients" AND "directions" ARE THE COLUMN-NAME'S IN THE TABLE
-        for (title, ingredients, directions) in self.mycursor:
-            recipes = {
-                        "title": title,
-                        "ingredients": ingredients,
-                        "directions": directions
-                       }
-            cooking_recipes.append(recipes)
+            # "title", "ingredients" AND "directions" ARE THE COLUMN-NAME'S IN THE TABLE
+            for (title, ingredients, directions) in self.mycursor:
+                recipes = {
+                            "title": title,
+                            "ingredients": ingredients,
+                            "directions": directions
+                           }
+                cooking_recipes.append(recipes)
+
+        except mysql.connector.errors.ProgrammingError:
+            raise Http404("NO ACCOUNT CREATED BY THE NAME " + table_name)
 
         # RETURNING LIST OF RECIPES AS LIST OF DICTIONARY
         return cooking_recipes
