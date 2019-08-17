@@ -25,6 +25,15 @@
 
     <section>
 
+        <div id="messages">
+            <!-- PRINTING ERROR MESSAGE -->
+            {% for message in messages %}
+
+            <h3> {{message}} </h3>
+
+            {% endfor %}
+        </div>
+
         <form id="form" action="register" method="post">
             {% csrf_token%}
 
@@ -43,13 +52,6 @@
             <input type="submit" value="submit">
 
         </form>
-
-        <!-- PRINTING ERROR MESSAGE -->
-        {% for message in messages %}
-
-        <h3> {{message}} </h3>
-
-        {% endfor %}
 
     </section>
 
