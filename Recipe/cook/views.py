@@ -84,13 +84,17 @@ def cook_guide(request, username):
 
         item = request.POST['item name']
 
-        # WRITE THE "item" AND "username" ON TO THE "connector" FILE USING THE "set_item_and_tablename" METHOD
-        connector = UserInput()
-        UserInput.set_item_and_tablename(connector, item, username)
+        # CHECKING WEATHER "item" ACTUALLY CONTAINS SOMETHING OR NOT
+        # RUN SPIDER IF "item" CONTAINS SOMETHING
+        if len(item) > 0:
+            
+            # WRITE THE "item" AND "username" ON TO THE "connector" FILE USING THE "set_item_and_tablename" METHOD
+            connector = UserInput()
+            UserInput.set_item_and_tablename(connector, item, username)
 
-        # RUN THE WEB-CRAWLER BY CALLING THE "crawler" METHOD
-        crawl = RunCrawler()
-        crawl.crawler()
+            # RUN THE WEB-CRAWLER BY CALLING THE "crawler" METHOD
+            crawl = RunCrawler()
+            crawl.crawler()
 
         # REDIRECTING BACK TO THE SAME PAGE AFTER CRAWLING
         return redirect('/cook_guide/' + username)
