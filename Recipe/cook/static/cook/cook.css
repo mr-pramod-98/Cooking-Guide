@@ -3,6 +3,12 @@
     padding : 10px;
 }
 
+#form h3{
+    float : right;
+    margin : 0px;
+    color : white;
+}
+
 .content{
     /* top-left corner, top-right corner, bottom-right corner, bottom-left corner */
     border-radius : 10px 10px 10px 10px;
