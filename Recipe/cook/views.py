@@ -35,6 +35,20 @@ class CookingGuide:
         # RETURNING LIST OF RECIPES AS LIST OF DICTIONARY
         return cooking_recipes
 
+    # "delete_data" METHOD IS USED TO DELETE A SPECIFIED RECORD FROM THE SPECIFIED TABLE IN THE SPECIFIED DATABASE
+    def delete_data(self, table_name, item):
+
+        # QUERY TO DELETE THE SPECIFIED RECORD
+        query = "DELETE FROM " + table_name + " WHERE TITLE = %s"
+        self.mycursor.execute(query, (item, ))
+
+        # SAVING CHANGES
+        self.mydatabase.commit()
+
+        # CLOSING
+        self.mycursor.close()
+        self.mydatabase.close()
+
 
 class RunCrawler:
 
@@ -65,7 +79,7 @@ def cook_guide(request, username):
 
         item = request.POST['item name']
 
-        # WRITE THE "item" AND "username" ON TO THE "connector" FILE USING THE "set_itenm_and_tablename" METHOD
+        # WRITE THE "item" AND "username" ON TO THE "connector" FILE USING THE "set_item_and_tablename" METHOD
         connector = UserInput()
         UserInput.set_item_and_tablename(connector, item, username)
 
@@ -83,3 +97,14 @@ def cook_guide(request, username):
         data = CookingGuide()
         cooking_recipes = data.fetch_data(username)
         return render(request, "cook_guide.html", {'cooking_recipes': cooking_recipes})
+
+
+# "delete" METHOD IS CALLED WHET THE USER CLICKS DELETE BUTTON
+def delete(request, username, title):
+
+    # DELETE THE SPECIFIED ITEM(title) FROM THE SPECIFIED TABLE(username) BY CALLING "delete_data" METHOD
+    data = CookingGuide()
+    data.delete_data(username, title)
+
+    # REDIRECTING BACK TO THE SAME PAGE AFTER DELETING
+    return redirect('/cook_guide/' + username)
