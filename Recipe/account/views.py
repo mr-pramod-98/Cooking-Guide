@@ -20,7 +20,8 @@ class CreateAccount:
                                     CREATE TABLE ''' + table_name + '''(
                                     TITLE VARCHAR(200) PRIMARY KEY,
                                     INGREDIENTS LONGTEXT,
-                                    DIRECTIONS LONGTEXT);
+                                    DIRECTIONS LONGTEXT,
+                                    TIME TIMESTAMP);
                                 ''')
 
 
@@ -53,7 +54,7 @@ def register(request):
                 if username_format is not None and username_format.span()[1] == len(username):
                     # ALL TEST-CASES ARE PASSED
                     pass
-                
+
                 else:
 
                     # IF THE USERNAME CONTAINS ANY SPECIAL CHARACTER OTHER THEN UNDERSCOPE
