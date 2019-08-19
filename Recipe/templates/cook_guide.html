@@ -49,6 +49,11 @@
                 <div class="title">
                     {{recipes.title}}
 
+                    <!-- DISPLAYING TIME TO CRAWLING -->
+                    <div id="time">
+                        ({{recipes.time}})
+                    </div>
+
                     <!-- SHOW "delete(X)" BUTTON WHEN USER IS LOGGED-IN -->
                     {% if user.is_authenticated %}
                         <a id="delete" href="/cook_guide/{{user.username}}/delete/{{recipes.title}}/"><button>X</button></a>
