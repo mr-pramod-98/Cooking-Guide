@@ -22,15 +22,16 @@ class CookingGuide:
 
         try:
             # "table_name" IS NAME OF THE TABLE FROM WHICH DATA HAS TO BE FETCHED
-            query = "SELECT * FROM " + table_name
+            query = "SELECT * FROM " + table_name + " ORDER BY TIME DESC"
             self.mycursor.execute(query)
 
             # "title", "ingredients" AND "directions" ARE THE COLUMN-NAME'S IN THE TABLE
-            for (title, ingredients, directions) in self.mycursor:
+            for (title, ingredients, directions, time) in self.mycursor:
                 recipes = {
                             "title": title,
                             "ingredients": ingredients,
-                            "directions": directions
+                            "directions": directions,
+                            "time": time
                            }
                 cooking_recipes.append(recipes)
 
