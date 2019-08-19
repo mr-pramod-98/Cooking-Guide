@@ -5,6 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import mysql.connector
+from datetime import datetime
 from .spiders.user_input import UserInput
 
 
@@ -38,8 +39,11 @@ class RecipesPipeline(object):
             for procedure in item['procedures']:
                 procedures = procedures + procedure + "\n"
 
-            query = "INSERT INTO " + table_name + "(TITLE, INGREDIENTS, DIRECTIONS) VALUES(%s, %s, %s)"
-            values = (item['title'], ingredients, procedures)
+            # GETTING CURRENT DATE AND TIME  OF INSERTION
+            timestamp = datetime.now()
+
+            query = "INSERT INTO " + table_name + "(TITLE, INGREDIENTS, DIRECTIONS, TIME) VALUES(%s, %s, %s, %s)"
+            values = (item['title'], ingredients, procedures, timestamp)
 
             self.mycursor.execute(query, values)
             self.mydatabase.commit()
