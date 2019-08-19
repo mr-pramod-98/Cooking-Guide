@@ -52,6 +52,12 @@
     scrollbar-width : thin;
 }
 
+#time{
+    display : inline;
+    font-size : 10px;
+    color : #808080;
+}
+
 hr{
     margin : 0px;
     padding : opx;
