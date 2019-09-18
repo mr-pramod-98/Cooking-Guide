@@ -64,6 +64,12 @@ hr{
     color : white;
 }
 
+.button{
+    position : relative;
+    top : -120px;
+    left : 5%;
+}
+
 #delete button{
     border : 1px solid #808080;
     background-color : #808080;
@@ -79,4 +85,19 @@ hr{
 
 #delete{
     float : right;
+}
+
+#deleteAccount button{
+    position : relative;
+    top : -148px;
+    left : 42%;
+    width : 100px;
+    height : 100px;
+}
+
+#deleteAccount button:hover{
+    border-width : 0px;
+    border-radius : 5px;
+    background-color : white;
+    color : red;
 }
