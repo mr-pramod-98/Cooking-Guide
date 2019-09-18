@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from django.http import Http404
 import mysql.connector
 from .ScrapyProject.Recipes.Recipes.spiders.user_input import UserInput
@@ -54,6 +55,15 @@ class CookingGuide:
         # CLOSING
         self.mycursor.close()
         self.mydatabase.close()
+
+    # "delete_my_account" METHOD IS USED TO DELETE THE SPECIFIED ACCOUNT(table) FROM THE DATABASE
+    def delete_my_account(self, table_name):
+
+        # DELETING THE CORRESPONDING ENTRY FROM THE "User" TABLE
+        User.objects.filter(username=table_name).delete()
+
+        # DELETING THE USER ACCOUNT FROM THE DATABASE (i.e, dropping the corresponding table)
+        self.mycursor.execute("DROP TABLE " + table_name)
 
 
 class RunCrawler:
@@ -118,3 +128,15 @@ def delete(request, username, title):
 
     # REDIRECTING BACK TO THE SAME PAGE AFTER DELETING
     return redirect('/cook_guide/' + username)
+
+
+def delete_account(request, username):
+
+    # DELETE THE SPECIFIED ACCOUNT(table_name/username) FROM THE DATABASE AND
+    # THE CORRESPONDING USER ENTRY IN THE "User" TABLE,
+    # BY CALLING "delete_MyAccount" METHOD
+    account = CookingGuide()
+    account.delete_my_account(username)
+
+    # REDIRECTING THE USER TO THE INDEX(HOME) PAGE AFTER DELETING THE USER'S ACCOUNT
+    return redirect('/')
