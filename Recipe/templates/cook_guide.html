@@ -21,6 +21,7 @@
                 <!-- REDIRECTING TO "cook" APP's "index" PAGE FROM "cook" APP's "cook_guide" PAGE
                      BY CALLING THE "logout" METHOD PRESENT IN URL "/account/logout"-->
                 <a class="button" href="/account/logout"><button>Logout</button></a>
+                <a id="deleteAccount" href="/cook_guide/{{user.username}}/delete_account"><button>Delete Account</button></a>
 
                 {% endif %}
 
