@@ -1,8 +1,58 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
+from email.message import EmailMessage
+import random
+import smtplib
 import mysql.connector
 import re
+
+
+class MailValidation:
+
+    OTP: int
+    Username_to_OTP = {}
+
+    def send_otp(self, username, email):
+
+        msg = EmailMessage()
+
+        # SUBJECT OF THE MAIL
+        msg['Subject'] = "One Time OTP for Cooking Guide"
+
+        # FROM ADDRESS
+        msg['From'] = 'cookingguide.dsatm@gmail.com'
+
+        # TO ADDRESS
+        msg['To'] = email
+
+        # GENERATING OTP
+        MailValidation.OTP = random.randint(1000, 9999)
+
+        # BODY OF THE MAIL
+        msg.set_content("your opt for Cooking Guide account registration is " + str(MailValidation.OTP))
+
+        # CREATING THE KEY VALUE PAIRS
+        self.Username_to_OTP[username] = MailValidation.OTP
+        print("MY OTP IS :" + str(self.Username_to_OTP[username]))
+
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+            smtp.login('cookingguide.dsatm@gmail.com', 'CookingGuide')
+            smtp.send_message(msg)
+
+    def check(self, username, otp):
+
+        # IF ENTERED OTP AND THE SENT OTP ARE SAME THE RETURN "True" OTHERWISE RETURN "False"
+        if MailValidation.Username_to_OTP[username] == int(otp):
+
+            # REMOVING THE ENTRIES
+            del MailValidation.Username_to_OTP[username]
+            return True
+        else:
+
+            # REMOVING THE ENTRIES
+            del MailValidation.Username_to_OTP[username]
+            return False
 
 
 class CreateAccount:
@@ -52,12 +102,13 @@ def register(request):
                 # CHECKING FOR THE FORMAT CORRECT USERNAME-FORMAT
                 username_format = re.match(r'[a-z,A-Z]+[a-z,A-Z,0-9]*[_]*[a-z,A-Z,0-9]*', username)
                 if username_format is not None and username_format.span()[1] == len(username):
+
                     # ALL TEST-CASES ARE PASSED
                     pass
 
                 else:
 
-                    # IF THE USERNAME CONTAINS ANY SPECIAL CHARACTER OTHER THEN UNDERSCOPE
+                    # IF THE USERNAME CONTAINS ANY SPECIAL CHARACTER OTHER THEN UNDERSCORE
                     # THEN REDIRECTING THE USER BACK TO THE "register" PAGE
                     messages.info(request, "no special character other then underscore(_) is allowed")
                     return redirect('register')
@@ -82,18 +133,17 @@ def register(request):
                 return redirect('register')
 
             else:
-                # CREATE AN ACCOUNT BY THE "username" OF USER
-                new_account = CreateAccount()
-                new_account.create_table_by_username(username)
 
                 # CREATING A USER RECORD IN THE "User" TABLE
-                user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password2)
+                user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
+                                                email=email, password=password2)
 
                 # SAVING THE CHANGES
                 user.save()
 
-                # REDIRECTING TO "login" PAGE AFTER SUCCESSFUL REGISTRATION
-                return redirect('login')
+                # REDIRECTING TO "UserValidationPage" PAGE FOR USER VERIFICATION
+                return redirect('userValidation/' + username + '/' + email)
+
         else:
 
             # IF THE PASSWORD DOES NOT MATCH THEN REDIRECTING THE USER BACK TO THE "register" PAGE
@@ -146,3 +196,40 @@ def logout(request):
 
     # REDIRECTING THE USER TO THE HOME PAGE
     return redirect('/')
+
+
+# "user_validation" METHOD IS CALLED FOR USER VERIFICATION
+def user_validation(request, username, email):
+
+    # IF THE REQUEST METHOD IS POST EXECUTE if BLOCK
+    if request.method == "POST":
+
+        # READING THE SENT DATA FROM THE "UserValidationPage" PAGE
+        otp = request.POST['OTP']
+
+        # VERIFING THE SENT OTP
+        validate = MailValidation()
+        if validate.check(username, otp):
+
+            # CREATE AN ACCOUNT BY THE "username" OF USER
+            new_account = CreateAccount()
+            new_account.create_table_by_username(username)
+
+            # REDIRECT THE USER TO "login" PAGE AFTER SUCCESSFUL REGISTRATION
+            return redirect('login')
+
+        else:
+
+            # REMOVE THE CORRESPONDING ENTRY FROM THE "User" TABLE
+            User.objects.filter(username=username).delete()
+            messages.info(request, "invalid OPT")
+            return redirect('register')
+
+    # IF THE REQUEST METHOD IS GET EXECUTE else BLOCK
+    else:
+
+        # SETTING-UP TO DETAILS
+        validate = MailValidation()
+        validate.send_otp(username, email)
+        print("username and email", username, email)
+        return render(request, 'UserValidationPage.html', {'username': username, 'email': email})
